@@ -1,20 +1,8 @@
 const {makeId} = require('../../services/util');
 const dbService = require('../../services/db.service');
+const {ObjectId} = require('mongodb');
 
-// const users = [
-//   {
-//     _id: 'u101',
-//     username: 'Muko',
-//     password: 'mukmuk',
-//     fullname: 'Muki Muka',
-//     imgUrl: 'http://some-img',
-//     createdAt: 123543452,
-//     followingIds: ['u105'],
-//     followersIds: ['u105'],
-//   },
-// ];
-
-const getUsers = async () => {
+const query = async () => {
   const collection = await dbService.getCollection('user');
   const users = await collection.find().toArray();
   return users;
@@ -22,7 +10,8 @@ const getUsers = async () => {
 
 const getUserById = async (id) => {
   try {
-    return await users.find((user) => user._id === id);
+    const collection = await dbService.getCollection('user');
+    return await collection.findOne({_id: ObjectId(id)});
   } catch (err) {
     throw new Error(err);
   }
@@ -30,7 +19,8 @@ const getUserById = async (id) => {
 
 const getUserByUsername = async (username) => {
   try {
-    return await users.find((user) => user.username === username);
+    const collection = await dbService.getCollection('user');
+    return await collection.findOne({username});
   } catch (err) {
     throw new Error(err);
   }
@@ -38,8 +28,8 @@ const getUserByUsername = async (username) => {
 
 const add = async (user) => {
   try {
-    user._id = makeId();
-    await users.push(user);
+    const collection = await dbService.getCollection('user');
+    await collection.insertOne(user);
     return user;
   } catch (err) {
     return new Error('Could not add user');
@@ -50,5 +40,5 @@ module.exports = {
   getUserById,
   getUserByUsername,
   add,
-  getUsers,
+  query,
 };

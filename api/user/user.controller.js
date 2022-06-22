@@ -9,9 +9,9 @@ const getUserById = async (req, res) => {
     console.error(err);
   }
 };
-const getUsers = async (req, res) => {
+const query = async (req, res) => {
   try {
-    const users = await userService.getUsers();
+    const users = await userService.query();
     res.send(users);
   } catch (err) {
     console.error(err);
@@ -20,5 +20,5 @@ const getUsers = async (req, res) => {
 
 module.exports = {
   getUserById,
-  getUsers,
+  query,
 };

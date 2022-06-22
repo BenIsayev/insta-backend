@@ -1,16 +1,16 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const { SECRET_KEY } = require('../../config');
+const {SECRET_KEY} = require('../../config');
 const checkAuth = require('../../services/check.auth');
 const userService = require('../user/user.service');
-const { getUserByUsername } = require('../user/user.service');
+const {getUserByUsername} = require('../user/user.service');
 
 const generateToken = (user) => {
-  return jwt.sign(user, SECRET_KEY, { expiresIn: '24h' });
+  return jwt.sign(user, SECRET_KEY, {expiresIn: '24h'});
 };
 
-const login = async ({ username, password }) => {
+const login = async ({username, password}) => {
   const user = await getUserByUsername(username);
 
   if (!user) {
@@ -39,8 +39,9 @@ const signup = async ({
   fullname,
 }) => {
   try {
-    if (password !== confirmPassword)
+    if (password !== confirmPassword) {
       return new Error('Passwords do not match');
+    }
     const encrypted = await bcrypt.hash(password, 12);
     const user = {
       username,
@@ -54,8 +55,9 @@ const signup = async ({
       followersIds: [],
       postIds: [],
     };
+
     await userService.add(user);
-    return await login({ username, password });
+    return await login({username, password});
   } catch (err) {
     return new Error(err);
   }
