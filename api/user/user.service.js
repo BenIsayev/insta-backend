@@ -1,17 +1,24 @@
-const { makeId } = require('../../services/util');
+const {makeId} = require('../../services/util');
+const dbService = require('../../services/db.service');
 
-const users = [
-  {
-    _id: 'u101',
-    username: 'Muko',
-    password: 'mukmuk',
-    fullname: 'Muki Muka',
-    imgUrl: 'http://some-img',
-    createdAt: 123543452,
-    followingIds: ['u105'],
-    followersIds: ['u105'],
-  },
-];
+// const users = [
+//   {
+//     _id: 'u101',
+//     username: 'Muko',
+//     password: 'mukmuk',
+//     fullname: 'Muki Muka',
+//     imgUrl: 'http://some-img',
+//     createdAt: 123543452,
+//     followingIds: ['u105'],
+//     followersIds: ['u105'],
+//   },
+// ];
+
+const getUsers = async () => {
+  const collection = await dbService.getCollection('user');
+  const users = await collection.find().toArray();
+  return users;
+};
 
 const getUserById = async (id) => {
   try {
@@ -43,4 +50,5 @@ module.exports = {
   getUserById,
   getUserByUsername,
   add,
+  getUsers,
 };

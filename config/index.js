@@ -1,4 +1,4 @@
-var config;
+let config;
 
 // keys.js - figure out what set of credentials to return
 if (process.env.NODE_ENV === 'production') {
@@ -11,4 +11,4 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 const SECRET_KEY = 'some very secret key';
-module.exports = { config, SECRET_KEY };
+module.exports = {config, SECRET_KEY};
