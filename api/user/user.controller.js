@@ -1,14 +1,34 @@
 const userService = require('./user.service');
 
-const getUserById = async (req, res) => {
+const getUserByUsername = async (req, res) => {
   try {
-    const {id} = req.params;
-    const user = await userService.getUserById(id);
+    const {username} = req.params;
+    const user = await userService.getUserByUsername(username);
     res.send(user);
   } catch (err) {
     console.error(err);
   }
 };
+const getUserProfile = async (req, res) => {
+  try {
+    const {username} = req.params;
+    const user = await userService.getUserByUsername(username);
+    delete user.password;
+    res.send(user);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+// const getUserById = async (req, res) => {
+//   try {
+//     const {id} = req.params;
+//     const user = await userService.getUserById(id);
+//     res.send(user);
+//   } catch (err) {
+//     console.error(err);
+//   }
+// };
 const query = async (req, res) => {
   try {
     const users = await userService.query();
@@ -19,6 +39,8 @@ const query = async (req, res) => {
 };
 
 module.exports = {
-  getUserById,
+  // getUserById,
   query,
+  getUserByUsername,
+  getUserProfile,
 };

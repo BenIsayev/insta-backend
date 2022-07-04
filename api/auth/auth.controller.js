@@ -13,6 +13,7 @@ const signup = async (req, res) => {
 const login = async (req, res) => {
   try {
     const credentials = req.body;
+    console.log(credentials);
     const returnedUser = await authService.login(credentials);
     res.send(returnedUser);
   } catch (err) {

@@ -12,7 +12,6 @@ const generateToken = (user) => {
 
 const login = async ({username, password}) => {
   const user = await getUserByUsername(username);
-
   if (!user) {
     console.error('No user found');
     return;
@@ -24,6 +23,7 @@ const login = async ({username, password}) => {
     console.error('Wrong credentials');
     return;
   }
+  delete user.password;
   const token = await generateToken(user);
   return {
     ...user,
@@ -54,6 +54,7 @@ const signup = async ({
       followingIds: [],
       followersIds: [],
       postIds: [],
+      about: '',
     };
 
     await userService.add(user);

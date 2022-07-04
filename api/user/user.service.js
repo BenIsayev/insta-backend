@@ -8,19 +8,20 @@ const query = async () => {
   return users;
 };
 
-const getUserById = async (id) => {
-  try {
-    const collection = await dbService.getCollection('user');
-    return await collection.findOne({_id: ObjectId(id)});
-  } catch (err) {
-    throw new Error(err);
-  }
-};
+// const getUserById = async (id) => {
+//   try {
+//     const collection = await dbService.getCollection('user');
+//     return await collection.findOne({_id: ObjectId(id)});
+//   } catch (err) {
+//     throw new Error(err);
+//   }
+// };
 
 const getUserByUsername = async (username) => {
   try {
     const collection = await dbService.getCollection('user');
-    return await collection.findOne({username});
+    const user = await collection.findOne({username});
+    return user;
   } catch (err) {
     throw new Error(err);
   }
@@ -37,7 +38,7 @@ const add = async (user) => {
 };
 
 module.exports = {
-  getUserById,
+  // getUserById,
   getUserByUsername,
   add,
   query,
